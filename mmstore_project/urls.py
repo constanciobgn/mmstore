@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.core.views import hello_world
+from apps.core.views import hello_world, mmstore_admin, new_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', hello_world, name='hello_world'),
+    path('core/', mmstore_admin, name='mmstore_admin'),
+    path('core/lists/new', new_list, name='new_list'),
 ]

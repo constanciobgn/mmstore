@@ -11,6 +11,7 @@ django = "*"
 selenium = "<4"
 behave = "*"
 behave-django = "*"
+django-test-without-migrations = "*"
 
 
 [dev-packages]
