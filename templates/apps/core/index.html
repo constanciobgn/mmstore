@@ -5,11 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-{{ form.as_p }}
-<button id="id_btn_salvar">Salvar</button>
+
+<form action="/core/lists/new" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button id="id_btn_salvar" type="submit">Salvar</button>
+</form>
 
 <table id="id_list_table">
-
+    {% for item in items %}
+        <tr>
+            <td>
+                {{ forloop.counter }}: {{ item.descricao }} {{ item.valor_compra }}
+            </td>
+        </tr>
+    {% endfor %}
 </table>
 </body>
 </html>

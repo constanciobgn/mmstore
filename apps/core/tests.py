@@ -59,3 +59,11 @@ class MMStoreAdminTest(TestCase):
         self.assertEqual(first_saved_item.descricao, 'The first list item')
         self.assertEqual(first_saved_item.valor_compra, Decimal(50))
         self.assertEqual(first_saved_item.list, list_)
+
+    def test_can_save_a_POST_request(self):
+        self.client.post('/core/lists/new', data={'descricao': 'A new list item', 'valor_compra': '50'})
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.descricao, 'A new list item')
+        self.assertEqual(new_item.valor_compra, Decimal(50))
