@@ -13,4 +13,5 @@ def step_impl(context, url):
 
 @then(u'ele visualiza a mensagem "Hello World"')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then ele visualiza a mensagem "Hello World"')
+    header_text = context.browser.find_element_by_tag_name('h1').text
+    context.test.assertIn('Hello World', header_text)
