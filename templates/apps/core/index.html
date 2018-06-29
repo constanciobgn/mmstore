@@ -50,6 +50,7 @@
 
             <ul class="list-inline float-right mb-0">
 
+                {% comment %}
                 <li class="list-inline-item dropdown notif">
                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="false" aria-expanded="false">
@@ -88,6 +89,8 @@
 
                     </div>
                 </li>
+
+
 
                 <li class="list-inline-item dropdown notif">
                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
@@ -228,6 +231,8 @@
                     </div>
                 </li>
 
+                {% endcomment %}
+
             </ul>
 
             <ul class="list-inline menu-left mb-0">
@@ -332,11 +337,13 @@
                         <a href="#" class="active"><span class="label radius-circle bg-danger float-right">20</span><i
                                 class="fa fa-fw fa-copy"></i><span> Example Pages </span></a>
                         <ul class="list-unstyled">
+                            {% comment %}
                             <li><a href="page-pricing-tables.html">Pricing Tables</a></li>
                             <li><a target="_blank" href="page-coming-soon.html">Countdown</a></li>
                             <li><a href="page-invoice.html">Invoice</a></li>
                             <li><a href="page-login.html">Login / Register</a></li>
-                            <li class="active"><a href="page-blank.html">Blank Page</a></li>
+                            {% endcomment %}
+                            <li class="active"><a href="{% url 'mmstore_admin' %}">Blank Page</a></li>
                         </ul>
                     </li>
 
@@ -461,6 +468,7 @@
                                         <th scope="col">Descrição</th>
                                         <th scope="col">Valor Compra</th>
                                         <th scope="col">Data Venda</th>
+                                        <th scope="col">Ações</th>
                                     </tr>
                                     </thead>
                                     <tbody>

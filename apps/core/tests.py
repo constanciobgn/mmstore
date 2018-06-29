@@ -11,7 +11,7 @@ from .models import List, Item, Parcela
 class HelloWorldTest(TestCase):
 
     def test_status_code(self):
-        response = self.client.get('/')
+        response = self.client.get('/hello/')
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_by_name(self):
