@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from apps.core.forms import ItemForm
+from apps.core.forms import ItemForm, ParcelaForm
 from apps.core.models import List, Item
 
 
@@ -23,3 +23,13 @@ def new_list(request):
         form.save(for_list=list_)
         return redirect(reverse('mmstore_admin'))
     return render(request, 'apps/core/index.html', {'form': form})
+
+
+def add_parcela(request, list_pk, item_pk):
+    form = ParcelaForm(data=request.POST)
+    item = Item.objects.get(id=item_pk)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save(for_item=item)
+            return redirect(f'/core/lists/0/items/{item.id}/add_parcela')
+    return render(request, 'apps/core/parcela/new.html', {'form': form, 'item': item, })

@@ -1,10 +1,11 @@
+from datetime import date
 from decimal import Decimal
 
 from django.test import TestCase
 from django.urls import reverse
 
-from .forms import ItemForm
-from .models import List, Item
+from .forms import ItemForm, ParcelaForm
+from .models import List, Item, Parcela
 
 
 class HelloWorldTest(TestCase):
@@ -69,3 +70,55 @@ class MMStoreAdminTest(TestCase):
         new_item = Item.objects.first()
         self.assertEqual(new_item.descricao, 'A new list item')
         self.assertEqual(new_item.valor_compra, Decimal(50))
+
+    def test_status_code(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
+        self.assertTemplateUsed(response, 'apps/core/parcela/new.html')
+
+    def test_uses_parcela_form(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
+        self.assertIsInstance(response.context['form'], ParcelaForm)
+
+    def test_form_item_input_has_placeholder_and_css_classes(self):
+        form = ParcelaForm()
+        self.assertIn('id="id_data_recebimento"', form.as_p())
+        self.assertIn('id="id_valor"', form.as_p())
+
+    def test_saving_and_retrieving_items(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   list=list_)
+
+        saved_list = List.objects.first()
+        self.assertEqual(saved_list, list_)
+
+        saved_items = Item.objects.all()
+        self.assertEqual(saved_items.count(), 1)
+
+        Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(50), item=item)
+
+        saved_parcelas = Parcela.objects.all()
+        self.assertEqual(saved_parcelas.count(), 1)
+
+    def test_can_save_a_POST_request(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   list=list_)
+
+        self.client.post(f'/core/lists/{list_.id}/items/{item.id}/add_parcela',
+                         data={'data_recebimento': str(date.today()), 'valor': '25'})
+
+        self.assertEqual(Parcela.objects.count(), 1)
