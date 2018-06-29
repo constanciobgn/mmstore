@@ -19,6 +19,7 @@ django-test-without-migrations = "*"
 pylint = "*"
 rope = "*"
 "autopep8" = "*"
+coverage = "*"
 
 
 [requires]
