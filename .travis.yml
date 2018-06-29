@@ -1,0 +1,32 @@
+language: python
+
+python:
+  - "3.6"
+
+env:
+  - MOZ_HEADLESS=1
+
+addons:
+  - firefox: "59.0.2"
+
+before_install:
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.20.0/geckodriver-v0.20.0-linux64.tar.gz
+  - mkdir geckodriver
+  - tar -xzf geckodriver-v0.20.0-linux64.tar.gz -C geckodriver
+  - export PATH=$PATH:$PWD/geckodriver
+
+install:
+  - cp contrib/env-sample .env
+  - pip install pipenv
+  - pipenv install
+  - pipenv install coveralls
+
+script:
+  - python manage.py makemigrations
+  - python manage.py migrate
+  - coverage run --source='.' manage.py test
+  - coverage run --source='.' manage.py behave
+
+# send coverage report to coveralls
+after_success: coveralls
+
