@@ -21,7 +21,7 @@ from apps.core.views import hello_world, mmstore_admin, new_list, add_parcela
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', hello_world, name='hello_world'),
+    path('hello/', hello_world, name='hello_world'),
 
     path('core/', mmstore_admin, name='mmstore_admin'),
     path('core/lists/new', new_list, name='new_list'),
