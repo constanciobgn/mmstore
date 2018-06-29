@@ -12,6 +12,9 @@ selenium = "<4"
 behave = "*"
 behave-django = "*"
 django-test-without-migrations = "*"
+dj-static = "*"
+python-decouple = "*"
+gunicorn = "*"
 
 
 [dev-packages]
