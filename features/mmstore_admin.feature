@@ -13,6 +13,8 @@
 
       E insere "50" no campo do valor da compra
 
+      E insere "29/06/2018" no campo da data de venda
+
       E Clica no botão de salvar a venda
 
       Então ele percebe que sua venda foi inserida na lista de vendas

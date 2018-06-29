@@ -21,6 +21,12 @@ def step_impl(context):
     context.browser.find_element_by_id('id_valor_compra').send_keys('50')
 
 
+@when(u'insere "29/06/2018" no campo da data de venda')
+def step_impl(context):
+    context.browser.find_element_by_id('id_data_venda').clear()
+    context.browser.find_element_by_id('id_data_venda').send_keys('29/06/2018')
+
+
 @when(u'Clica no botão de salvar a venda')
 def step_impl(context):
     context.browser.find_element_by_id('id_btn_salvar').click()

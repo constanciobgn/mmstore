@@ -251,7 +251,7 @@
             <div id="sidebar-menu">
 
                 <ul>
-
+                    {% comment %}
                     <li class="submenu">
                         <a href="index.html"><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
                     </li>
@@ -326,6 +326,8 @@
                         </ul>
                     </li>
 
+                    {% endcomment %}
+
                     <li class="submenu">
                         <a href="#" class="active"><span class="label radius-circle bg-danger float-right">20</span><i
                                 class="fa fa-fw fa-copy"></i><span> Example Pages </span></a>
@@ -337,6 +339,8 @@
                             <li class="active"><a href="page-blank.html">Blank Page</a></li>
                         </ul>
                     </li>
+
+                    {% comment %}
 
                     <li class="submenu">
                         <a href="#"><span class="label radius-circle bg-primary float-right">9</span><i
@@ -371,6 +375,8 @@
                             <li><a href="pro-slider.html">Slider</a></li>
                         </ul>
                     </li>
+
+                    {% endcomment %}
 
                 </ul>
 
@@ -454,6 +460,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Descrição</th>
                                         <th scope="col">Valor Compra</th>
+                                        <th scope="col">Data Venda</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -462,6 +469,7 @@
                                             <th scope="row">{{ forloop.counter }}</th>
                                             <td> {{ item.descricao }} </td>
                                             <td> {{ item.valor_compra }} </td>
+                                            <td> {{ item.data_venda }} </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

@@ -44,6 +44,7 @@ class MMStoreAdminTest(TestCase):
         form = ItemForm()
         self.assertIn('id="id_descricao"', form.as_p())
         self.assertIn('id="id_valor_compra"', form.as_p())
+        self.assertIn('id="id_data_venda"', form.as_p())
 
     def test_saving_and_retrieving_items(self):
         list_ = List.objects.create()
