@@ -33,7 +33,7 @@ def step_impl(context):
         try:
             table = context.browser.find_element_by_id('id_list_table')
             rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1: Blusa vermelha 50,00', [row.text for row in rows])
+            context.test.assertIn('1 Blusa vermelha 50,00', [row.text for row in rows])
             return
         except (AssertionError, WebDriverException) as e:
             if time.time() - start_time > MAX_WAIT:

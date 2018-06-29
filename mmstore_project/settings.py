@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'behave_django',
     # 'test-without-migrations',
+    'widget_tweaks',
 
     'apps.core'
 ]
