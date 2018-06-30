@@ -6,6 +6,20 @@ from selenium.common.exceptions import WebDriverException
 MAX_WAIT = 10
 
 
+def wait_for_row_in_list_table(context, row_text):
+    start_time = time.time()
+    while True:
+        try:
+            table = context.browser.find_element_by_id('id_list_table')
+            rows = table.find_elements_by_tag_name('tr')
+            context.test.assertIn(row_text, [row.text for row in rows])
+            return
+        except (AssertionError, WebDriverException) as e:
+            if time.time() - start_time > MAX_WAIT:
+                raise e
+            time.sleep(0.5)
+
+
 @when(u'o usuário acessa a url "{url}" relativa a criação de lista de vendas')
 def step_impl(context, url):
     context.browser.get(context.get_url(url))
@@ -40,18 +54,7 @@ def step_impl(context):
 
 @then(u'ele percebe que sua venda foi inserida na lista de vendas')
 def step_impl(context):
-    start_time = time.time()
-    while True:
-        try:
-            table = context.browser.find_element_by_id('id_list_table')
-            rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar',
-                                  [row.text for row in rows])
-            return
-        except (AssertionError, WebDriverException) as e:
-            if time.time() - start_time > MAX_WAIT:
-                raise e
-            time.sleep(0.5)
+    wait_for_row_in_list_table(context, '1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
 
 
 @given(u'que existe uma venda realizada no sistema por um usuário')
@@ -64,18 +67,7 @@ def step_impl(context):
     context.browser.find_element_by_id('id_status').send_keys('0')
     context.browser.find_element_by_id('id_btn_salvar').click()
 
-    start_time = time.time()
-    while True:
-        try:
-            table = context.browser.find_element_by_id('id_list_table')
-            rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar',
-                                  [row.text for row in rows])
-            return
-        except (AssertionError, WebDriverException) as e:
-            if time.time() - start_time > MAX_WAIT:
-                raise e
-            time.sleep(0.5)
+    wait_for_row_in_list_table(context, '1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
 
 
 @when(u'o usuário clicar no link de adicionar parcela na venda')
@@ -109,34 +101,14 @@ def step_impl(context):
 
 @then(u'ele percebe que a parcela foi inserida na venda')
 def step_impl(context):
-    start_time = time.time()
-    while True:
-        try:
-            table = context.browser.find_element_by_id('id_list_table')
-            rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1 29 de Junho de 2018 25,00 Pendente', [row.text for row in rows])
-            return
-        except (AssertionError, WebDriverException) as e:
-            if time.time() - start_time > MAX_WAIT:
-                raise e
-            time.sleep(0.5)
-
+    wait_for_row_in_list_table(context, '1 29 de Junho de 2018 25,00 Pendente')
 
 
 @when(u'o usuário clicar no link de detalhar a venda')
 def step_impl(context):
     context.browser.find_element_by_link_text('Detalhar').click()
 
+
 @then(u'ele verá os detalhes da venda')
 def step_impl(context):
-    start_time = time.time()
-    while True:
-        try:
-            table = context.browser.find_element_by_id('id_list_table')
-            rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar', [row.text for row in rows])
-            return
-        except (AssertionError, WebDriverException) as e:
-            if time.time() - start_time > MAX_WAIT:
-                raise e
-            time.sleep(0.5)
+    wait_for_row_in_list_table(context, 'Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar')
