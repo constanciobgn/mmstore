@@ -51,7 +51,8 @@ class MMStoreAdminTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
         list_ = List.objects.create()
-        Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+        Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                            data_venda=date.today(),
                             status='0', list=list_)
 
         saved_list = List.objects.first()
@@ -62,6 +63,7 @@ class MMStoreAdminTest(TestCase):
 
         first_saved_item = saved_items[0]
         self.assertEqual(first_saved_item.descricao, 'The first list item')
+        self.assertEqual(first_saved_item.cliente, 'Nalveira')
         self.assertEqual(first_saved_item.valor_compra, Decimal(50))
         self.assertEqual(first_saved_item.data_venda, date.today())
         self.assertEqual(first_saved_item.status, '0')
@@ -69,32 +71,35 @@ class MMStoreAdminTest(TestCase):
 
     def test_can_save_a_POST_request(self):
         self.client.post('/core/lists/new',
-                         data={'descricao': 'A new list item', 'valor_compra': '50', 'data_venda': '29/06/2018',
-                               'status': '0'})
+                         data={'descricao': 'A new list item', 'cliente': 'Nalveira', 'valor_compra': '50',
+                               'data_venda': '29/06/2018', 'status': '0'})
 
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.descricao, 'A new list item')
+        self.assertEqual(new_item.cliente, 'Nalveira')
         self.assertEqual(new_item.valor_compra, Decimal(50))
+        self.assertEqual(new_item.data_venda, date.today())
+        self.assertEqual(new_item.status, '0')
 
     def test_status_code(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
         self.assertEqual(response.status_code, 200)
 
     def test_uses_correct_template(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
         self.assertTemplateUsed(response, 'apps/core/parcela/new.html')
 
     def test_uses_parcela_form(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
         self.assertIsInstance(response.context['form'], ParcelaForm)
 
@@ -106,8 +111,8 @@ class MMStoreAdminTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
 
         saved_list = List.objects.first()
         self.assertEqual(saved_list, list_)
@@ -122,8 +127,8 @@ class MMStoreAdminTest(TestCase):
 
     def test_can_save_a_POST_request(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
 
         self.client.post(f'/core/lists/{list_.id}/items/{item.id}/add_parcela',
                          data={'data_recebimento': str(date.today()), 'valor': '25', 'status': '0', })
@@ -132,14 +137,14 @@ class MMStoreAdminTest(TestCase):
 
     def test_status_code(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
         self.assertEqual(response.status_code, 200)
 
     def test_uses_correct_template(self):
         list_ = List.objects.create()
-        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
-                                   status='0', list=list_)
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
         self.assertTemplateUsed(response, 'apps/core/item_detail.html')
