@@ -11,3 +11,11 @@ def after_all(context):
 
 def before_feature(context, feature):
     pass
+
+
+def before_scenario(context, scenario):
+    pass
+
+
+def before_step(context, step):
+    pass

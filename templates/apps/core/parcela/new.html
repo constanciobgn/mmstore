@@ -458,8 +458,9 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Data Recebimento</th>
-                                        <th scope="col">Valor Compra</th>
+                                        <th scope="col">Data de Vencimento</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -468,6 +469,7 @@
                                             <th scope="row">{{ forloop.counter }}</th>
                                             <td> {{ parcela.data_recebimento }} </td>
                                             <td> {{ parcela.valor }} </td>
+                                            <td> {{ parcela.get_status_display }} </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
