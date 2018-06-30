@@ -45,7 +45,7 @@ def step_impl(context):
         try:
             table = context.browser.find_element_by_id('id_list_table')
             rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar',
+            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar',
                                   [row.text for row in rows])
             return
         except (AssertionError, WebDriverException) as e:
@@ -69,7 +69,7 @@ def step_impl(context):
         try:
             table = context.browser.find_element_by_id('id_list_table')
             rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar',
+            context.test.assertIn('1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar',
                                   [row.text for row in rows])
             return
         except (AssertionError, WebDriverException) as e:
@@ -115,6 +115,26 @@ def step_impl(context):
             table = context.browser.find_element_by_id('id_list_table')
             rows = table.find_elements_by_tag_name('tr')
             context.test.assertIn('1 29 de Junho de 2018 25,00 Pendente', [row.text for row in rows])
+            return
+        except (AssertionError, WebDriverException) as e:
+            if time.time() - start_time > MAX_WAIT:
+                raise e
+            time.sleep(0.5)
+
+
+
+@when(u'o usuário clicar no link de detalhar a venda')
+def step_impl(context):
+    context.browser.find_element_by_link_text('Detalhar').click()
+
+@then(u'ele verá os detalhes da venda')
+def step_impl(context):
+    start_time = time.time()
+    while True:
+        try:
+            table = context.browser.find_element_by_id('id_list_table')
+            rows = table.find_elements_by_tag_name('tr')
+            context.test.assertIn('Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar', [row.text for row in rows])
             return
         except (AssertionError, WebDriverException) as e:
             if time.time() - start_time > MAX_WAIT:

@@ -128,3 +128,17 @@ class MMStoreAdminTest(TestCase):
                          data={'data_recebimento': str(date.today()), 'valor': '25', 'status': '0', })
 
         self.assertEqual(Parcela.objects.count(), 1)
+
+    def test_status_code(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   status='0', list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', valor_compra=Decimal(50), data_venda=date.today(),
+                                   status='0', list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
+        self.assertTemplateUsed(response, 'apps/core/item_detail.html')

@@ -38,3 +38,13 @@ Funcionalidade: Implementação da parte administrativa da loja MMStore
 
     Então ele percebe que a parcela foi inserida na venda
 
+
+  Cenário: Detalhar uma venda realizada sem parcelas
+
+    Dado que existe uma venda realizada no sistema por um usuário
+
+    Quando o usuário clicar no link de detalhar a venda
+
+    Então ele verá os detalhes da venda
+
+

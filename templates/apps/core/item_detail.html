@@ -425,38 +425,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <h3><i class="fa fa-check-square-o"></i> Cadastrar Venda</h3>
-                            </div>
-
-                            <div class="card-body">
-
-                                <form action="/core/lists/new" method="post">
-
-                                    {% csrf_token %}
-
-                                    {% for field in form.visible_fields %}
-                                        <div class="form-group">
-                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                            {% render_field field class="form-control" %}
-                                        </div>
-                                    {% endfor %}
-
-                                    <button id="id_btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
-
-                                </form>
-
-                            </div>
-                        </div><!-- end card-->
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h3><i class="fa fa-table"></i> Lista de Vendas</h3>
+                                <h3><i class="fa fa-table"></i> Detalhe da Venda</h3>
                             </div>
 
                             <div class="card-body">
@@ -464,7 +433,6 @@
                                 <table class="table table-responsive-xl" id="id_list_table">
                                     <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Descrição</th>
                                         <th scope="col">Valor Compra</th>
                                         <th scope="col">Data Venda</th>
@@ -473,19 +441,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in items %}
-                                        <tr>
-                                            <th scope="row">{{ forloop.counter }}</th>
-                                            <td> {{ item.descricao }} </td>
-                                            <td> {{ item.valor_compra }} </td>
-                                            <td> {{ item.data_venda }} </td>
-                                            <td> {{ item.get_status_display }} </td>
-                                            <td>
-                                                <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
-                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td> {{ item.descricao }} </td>
+                                        <td> {{ item.valor_compra }} </td>
+                                        <td> {{ item.data_venda }} </td>
+                                        <td> {{ item.get_status_display }} </td>
+                                        <td>
+                                            <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
 

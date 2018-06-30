@@ -33,3 +33,8 @@ def add_parcela(request, list_pk, item_pk):
             form.save(for_item=item)
             return redirect(f'/core/lists/0/items/{item.id}/add_parcela')
     return render(request, 'apps/core/parcela/new.html', {'form': form, 'item': item, })
+
+
+def item_detail(request, list_pk, item_pk):
+    item = Item.objects.get(id=item_pk)
+    return render(request, 'apps/core/item_detail.html', {'item': item, })
