@@ -430,7 +430,7 @@
 
                             <div class="card-body">
 
-                                <table class="table table-responsive-xl" id="id_list_table">
+                                <table class="table table-responsive-xl" id="id_item_list_table">
                                     <thead>
                                     <tr>
                                         <th scope="col">Descrição</th>
@@ -450,6 +450,42 @@
                                             <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a>
                                         </td>
                                     </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div><!-- end card-->
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h3><i class="fa fa-table"></i> Parcelas</h3>
+                            </div>
+
+                            <div class="card-body">
+
+                                <table class="table table-responsive-xl" id="id_parcela_list_table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Data de Vencimento</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for parcela in item.parcela_set.all %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td> {{ parcela.data_recebimento }} </td>
+                                            <td> {{ parcela.valor }} </td>
+                                            <td> {{ parcela.get_status_display }} </td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
 

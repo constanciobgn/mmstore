@@ -48,3 +48,14 @@ Funcionalidade: Implementação da parte administrativa da loja MMStore
     Então ele verá os detalhes da venda
 
 
+  Cenário: Detalhar uma venda realizada com parcelas
+
+    Dado que existe uma venda realizada no sistema por um usuário
+
+    Dado que existe uma parcela cadastrada para a venda realizada
+
+    Quando o usuário clicar no link de detalhar a venda
+
+    Então ele verá os detalhes da venda e da parcela cadastrada
+
+
