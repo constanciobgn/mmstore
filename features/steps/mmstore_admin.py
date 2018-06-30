@@ -30,6 +30,11 @@ def step_impl(context):
     context.browser.find_element_by_id('id_descricao').send_keys('Blusa vermelha')
 
 
+@when(u'insere "Nalveira" no campo de cliente da compra')
+def step_impl(context):
+    context.browser.find_element_by_id('id_cliente').send_keys('Nalveira')
+
+
 @when(u'insere "50" no campo do valor da compra')
 def step_impl(context):
     context.browser.find_element_by_id('id_valor_compra').send_keys('50')
@@ -55,20 +60,21 @@ def step_impl(context):
 @then(u'ele percebe que sua venda foi inserida na lista de vendas')
 def step_impl(context):
     wait_for_row_in_list_table(context, 'id_item_list_table',
-                               '1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
+                               '1 Blusa vermelha Nalveira 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
 
 
 @given(u'que existe uma venda realizada no sistema por um usuário')
 def step_impl(context):
     context.browser.get(context.get_url('/core/'))
     context.browser.find_element_by_id('id_descricao').send_keys('Blusa vermelha')
+    context.browser.find_element_by_id('id_cliente').send_keys('Nalveira')
     context.browser.find_element_by_id('id_valor_compra').send_keys('50')
     context.browser.find_element_by_id('id_data_venda').clear()
     context.browser.find_element_by_id('id_data_venda').send_keys('29/06/2018')
     context.browser.find_element_by_id('id_status').send_keys('0')
     context.browser.find_element_by_id('id_btn_salvar').click()
     wait_for_row_in_list_table(context, 'id_item_list_table',
-                               '1 Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
+                               '1 Blusa vermelha Nalveira 50,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar')
 
 
 @when(u'o usuário clicar no link de adicionar parcela na venda')
@@ -113,7 +119,7 @@ def step_impl(context):
 @then(u'ele verá os detalhes da venda')
 def step_impl(context):
     wait_for_row_in_list_table(context, 'id_item_list_table',
-                               'Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar')
+                               'Blusa vermelha Nalveira 50,00 29 de Junho de 2018 Recebendo Parcelar')
 
 
 @given(u'que existe uma parcela cadastrada para a venda realizada')
@@ -134,5 +140,5 @@ def step_impl(context):
 @then(u'ele verá os detalhes da venda e da parcela cadastrada')
 def step_impl(context):
     wait_for_row_in_list_table(context, 'id_item_list_table',
-                               'Blusa vermelha 50,00 29 de Junho de 2018 Recebendo Parcelar')
+                               'Blusa vermelha Nalveira 50,00 29 de Junho de 2018 Recebendo Parcelar')
     wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 29 de Junho de 2018 25,00 Pendente')

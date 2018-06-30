@@ -41,9 +41,10 @@ class MMStoreAdminTest(TestCase):
         response = self.client.get(reverse('mmstore_admin'))
         self.assertIsInstance(response.context['form'], ItemForm)
 
-    def test_form_item_input_has_placeholder_and_css_classes(self):
+    def test_exists_ids_in_form_item(self):
         form = ItemForm()
         self.assertIn('id="id_descricao"', form.as_p())
+        self.assertIn('id="id_cliente"', form.as_p())
         self.assertIn('id="id_valor_compra"', form.as_p())
         self.assertIn('id="id_data_venda"', form.as_p())
         self.assertIn('id="id_status"', form.as_p())

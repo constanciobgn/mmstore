@@ -434,6 +434,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Descrição</th>
+                                        <th scope="col">Cliente</th>
                                         <th scope="col">Valor Compra</th>
                                         <th scope="col">Data Venda</th>
                                         <th scope="col">Status</th>
@@ -443,6 +444,7 @@
                                     <tbody>
                                     <tr>
                                         <td> {{ item.descricao }} </td>
+                                        <td> {{ item.cliente }} </td>
                                         <td> {{ item.valor_compra }} </td>
                                         <td> {{ item.data_venda }} </td>
                                         <td> {{ item.get_status_display }} </td>

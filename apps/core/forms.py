@@ -4,11 +4,11 @@ from apps.core.models import Item, Parcela
 
 
 class ItemForm(forms.models.ModelForm):
-    field_order = ['descricao', 'valor_compra', 'data_venda', 'status']
+    field_order = ['descricao', 'cliente', 'valor_compra', 'data_venda', 'status']
 
     class Meta:
         model = Item
-        fields = {'descricao', 'valor_compra', 'data_venda', 'status', }
+        fields = {'descricao', 'cliente', 'valor_compra', 'data_venda', 'status', }
 
     def save(self, for_list):
         self.instance.list = for_list

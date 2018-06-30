@@ -12,6 +12,8 @@ Funcionalidade: Implementação da parte administrativa da loja MMStore
 
     E insere "Blusa vermelha" no campo de descrição da venda
 
+    E insere "Nalveira" no campo de cliente da compra
+
     E insere "50" no campo do valor da compra
 
     E insere "29/06/2018" no campo da data de venda
