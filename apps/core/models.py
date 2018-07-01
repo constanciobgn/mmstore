@@ -17,6 +17,13 @@ class Item(models.Model):
     status = models.CharField(default='0', choices=STATUS_CHOICES, max_length=1)
     list = models.ForeignKey(List, default=None, on_delete=models.CASCADE)
 
+    @property
+    def valor_venda(self):
+        parcelas = Parcela.objects.values_list('valor', flat=True).filter(item__pk=self.pk)
+        if parcelas:
+            return sum(parcelas)
+        return Decimal(0)
+
     class Meta:
         ordering = ('-data_venda',)
 
