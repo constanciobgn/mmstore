@@ -86,3 +86,22 @@ class MMStoreAdminTest(TestCase):
                                    data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
         self.assertTemplateUsed(response, 'apps/core/item_detail.html')
+
+
+
+
+
+    # def test_status_code(self):
+    #     list_ = List.objects.create()
+    #     item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+    #                                data_venda=date.today(), status='0', list=list_)
+    #     response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_delete')
+    #     self.assertEqual(response.status_code, 200)
+
+    def test_item_delete(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+        response = self.client.post(f'/core/lists/{list_.id}/items/{item.id}/item_delete')
+
+        self.assertEqual(Item.objects.count(), 0)

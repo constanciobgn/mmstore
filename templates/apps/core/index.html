@@ -486,7 +486,8 @@
                                             <td> {{ item.get_status_display }} </td>
                                             <td>
                                                 <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
-                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a>
+                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
+                                                <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

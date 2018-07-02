@@ -38,3 +38,10 @@ def add_parcela(request, list_pk, item_pk):
 def item_detail(request, list_pk, item_pk):
     item = Item.objects.get(id=item_pk)
     return render(request, 'apps/core/item_detail.html', {'item': item, })
+
+
+def item_delete(request, list_pk, item_pk):
+    item = Item.objects.get(id=item_pk)
+    item.delete()
+    items = Item.objects.all()
+    return render(request, 'apps/core/index.html', {'msg': "Item deletado", 'items': items})
