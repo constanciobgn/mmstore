@@ -44,4 +44,4 @@ def item_delete(request, list_pk, item_pk):
     item = Item.objects.get(id=item_pk)
     item.delete()
     items = Item.objects.all()
-    return render(request, 'apps/core/index.html', {'msg': "Item deletado", 'items': items})
+    return render(request, 'apps/core/index.html', {'items': items,})

@@ -2,6 +2,7 @@ import time
 
 from behave import when, then, given
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.keys import Keys
 
 MAX_WAIT = 10
 
@@ -44,6 +45,7 @@ def step_impl(context):
 def step_impl(context):
     context.browser.find_element_by_id('id_data_venda').clear()
     context.browser.find_element_by_id('id_data_venda').send_keys('29/06/2018')
+    context.browser.find_element_by_id('id_data_venda').send_keys(Keys.TAB)
 
 
 @when(u'insere "Recebendo" no campo de status da venda')
@@ -71,6 +73,7 @@ def step_impl(context):
     context.browser.find_element_by_id('id_valor_compra').send_keys('50')
     context.browser.find_element_by_id('id_data_venda').clear()
     context.browser.find_element_by_id('id_data_venda').send_keys('29/06/2018')
+    context.browser.find_element_by_id('id_data_venda').send_keys(Keys.TAB)
     context.browser.find_element_by_id('id_status').send_keys('0')
     context.browser.find_element_by_id('id_btn_salvar').click()
     wait_for_row_in_list_table(context, 'id_item_list_table',

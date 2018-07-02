@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,8 +27,13 @@
     <!-- Custom CSS -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css"/>
 
-    <!-- BEGIN CSS for this page -->
+    <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/moment.min.js' %}"></script>
 
+
+    <!-- BEGIN CSS for this page -->
+    <link href="{% static 'assets/plugins/datetimepicker/css/daterangepicker.css' %}" rel="stylesheet"/>
     <!-- END CSS for this page -->
 
 </head>
@@ -434,12 +439,35 @@
 
                                     {% csrf_token %}
 
-                                    {% for field in form.visible_fields %}
-                                        <div class="form-group">
-                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                            {% render_field field class="form-control" %}
-                                        </div>
-                                    {% endfor %}
+                                    <div class="form-group">
+                                        <label for="{{ form.descricao.id_for_label }}">{{ form.descricao.label }}</label>
+                                        {% render_field form.descricao class="form-control" %}
+
+                                        <label for="{{ form.cliente.id_for_label }}">{{ form.cliente.label }}</label>
+                                        {% render_field form.cliente class="form-control" %}
+
+                                        <label for="{{ form.valor_compra.id_for_label }}">{{ form.valor_compra.label }}</label>
+                                        {% render_field form.valor_compra class="form-control" %}
+
+                                        <label for="{{ form.data_venda.id_for_label }}">{{ form.data_venda.label }}</label>
+                                        {% render_field form.data_venda class="form-control" %}
+
+                                        <script>
+                                            $(function () {
+                                                $('input[name="data_venda"]').daterangepicker({
+                                                    singleDatePicker: true,
+                                                    showDropdowns: true,
+                                                    locale: {
+                                                        format: 'DD/MM/YYYY'
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+                                        <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                                        {% render_field form.status class="form-control" %}
+                                    </div>
+
 
                                     <button id="id_btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
 
@@ -523,10 +551,6 @@
 </div>
 <!-- END main -->
 
-<script src="{% static 'assets/js/modernizr.min.js' %}"></script>
-<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-<script src="{% static 'assets/js/moment.min.js' %}"></script>
-
 <script src="{% static 'assets/js/popper.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 
@@ -541,7 +565,8 @@
 <script src="{% static 'assets/js/pikeadmin.js' %}"></script>
 
 <!-- BEGIN Java Script for this page -->
-
+<script src="{% static 'assets/plugins/datetimepicker/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/plugins/datetimepicker/js/daterangepicker.js' %}"></script>
 <!-- END Java Script for this page -->
 
 
