@@ -256,6 +256,11 @@
             <div id="sidebar-menu">
 
                 <ul>
+
+                    <li class="submenu">
+                        <a href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span> </a>
+                    </li>
+
                     {% comment %}
                     <li class="submenu">
                         <a href="index.html"><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
@@ -333,19 +338,21 @@
 
                     {% endcomment %}
 
+                    {% comment %}
                     <li class="submenu">
                         <a href="#" class="active"><span class="label radius-circle bg-danger float-right">20</span><i
                                 class="fa fa-fw fa-copy"></i><span> Example Pages </span></a>
                         <ul class="list-unstyled">
-                            {% comment %}
+
                             <li><a href="page-pricing-tables.html">Pricing Tables</a></li>
                             <li><a target="_blank" href="page-coming-soon.html">Countdown</a></li>
                             <li><a href="page-invoice.html">Invoice</a></li>
                             <li><a href="page-login.html">Login / Register</a></li>
-                            {% endcomment %}
+
                             <li class="active"><a href="{% url 'mmstore_admin' %}">Blank Page</a></li>
                         </ul>
                     </li>
+                    {% endcomment %}
 
                     {% comment %}
 
@@ -409,10 +416,10 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="breadcrumb-holder">
-                            <h1 class="main-title float-left">Blank Page</h1>
+                            <h1 class="main-title float-left">Vendas</h1>
                             <ol class="breadcrumb float-right">
                                 <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item active">Blank Page</li>
+                                <li class="breadcrumb-item active">Vendas</li>
                             </ol>
                             <div class="clearfix"></div>
                         </div>

@@ -50,6 +50,7 @@
 
             <ul class="list-inline float-right mb-0">
 
+                {% comment %}
                 <li class="list-inline-item dropdown notif">
                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="false" aria-expanded="false">
@@ -88,6 +89,8 @@
 
                     </div>
                 </li>
+
+
 
                 <li class="list-inline-item dropdown notif">
                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
@@ -228,6 +231,8 @@
                     </div>
                 </li>
 
+                {% endcomment %}
+
             </ul>
 
             <ul class="list-inline menu-left mb-0">
@@ -251,6 +256,11 @@
             <div id="sidebar-menu">
 
                 <ul>
+
+                    <li class="submenu">
+                        <a href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span> </a>
+                    </li>
+
                     {% comment %}
                     <li class="submenu">
                         <a href="index.html"><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
@@ -326,8 +336,6 @@
                         </ul>
                     </li>
 
-                    {% endcomment %}
-
                     <li class="submenu">
                         <a href="#" class="active"><span class="label radius-circle bg-danger float-right">20</span><i
                                 class="fa fa-fw fa-copy"></i><span> Example Pages </span></a>
@@ -339,6 +347,7 @@
                             <li class="active"><a href="page-blank.html">Blank Page</a></li>
                         </ul>
                     </li>
+                    {% endcomment %}
 
                     {% comment %}
 
@@ -402,10 +411,10 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="breadcrumb-holder">
-                            <h1 class="main-title float-left">Blank Page</h1>
+                            <h1 class="main-title float-left">Vendas</h1>
                             <ol class="breadcrumb float-right">
                                 <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item active">Blank Page</li>
+                                <li class="breadcrumb-item active">Vendas</li>
                             </ol>
                             <div class="clearfix"></div>
                         </div>
