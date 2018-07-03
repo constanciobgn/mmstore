@@ -43,5 +43,4 @@ def item_detail(request, list_pk, item_pk):
 def item_delete(request, list_pk, item_pk):
     item = Item.objects.get(id=item_pk)
     item.delete()
-    items = Item.objects.all()
-    return render(request, 'apps/core/index.html', {'items': items,})
+    return redirect(reverse('mmstore_admin'))
