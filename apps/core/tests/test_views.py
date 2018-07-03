@@ -124,7 +124,7 @@ class MMStoreAdminTest(TestCase):
 
         self.client.post(f'/core/lists/{list_.id}/items/{item.id}/item_edit',
                          data={'descricao': 'A new list item edited', 'cliente': 'Nalveira', 'valor_compra': '50',
-                               'data_venda': '01/07/2018', 'status': '0'})
+                               'data_venda': str(date.today()), 'status': '0'})
 
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()

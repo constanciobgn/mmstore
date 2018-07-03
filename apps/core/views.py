@@ -51,8 +51,10 @@ def item_edit(request, list_pk, item_pk):
     form = ItemForm(data=request.POST or None, instance=item)
     if request.method == 'POST':
         if form.is_valid():
-            Item.objects.filter(id=item_pk).update(descricao=request.POST['descricao'], cliente=request.POST['cliente'],
-                                                   valor_compra=request.POST['valor_compra'],
-                                                   status=request.POST['status'])
+            Item.objects.filter(id=item_pk).update(descricao=form.cleaned_data['descricao'],
+                                                   cliente=form.cleaned_data['cliente'],
+                                                   valor_compra=form.cleaned_data['valor_compra'],
+                                                   data_venda=form.cleaned_data['data_venda'],
+                                                   status=form.cleaned_data['status'])
             return redirect(reverse('mmstore_admin'))
     return render(request, 'apps/core/item_edit.html', {'form': form, 'item': item, })
