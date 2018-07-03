@@ -87,10 +87,6 @@ class MMStoreAdminTest(TestCase):
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
         self.assertTemplateUsed(response, 'apps/core/item_detail.html')
 
-
-
-
-
     # def test_status_code(self):
     #     list_ = List.objects.create()
     #     item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
@@ -106,3 +102,34 @@ class MMStoreAdminTest(TestCase):
         self.client.post(f'/core/lists/{list_.id}/items/{item.id}/item_delete')
 
         self.assertEqual(Item.objects.count(), 0)
+
+    def test_status_code(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
+        self.assertTemplateUsed(response, 'apps/core/item_edit.html')
+
+    def test_can_save_a_POST_request(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        self.client.post(f'/core/lists/{list_.id}/items/{item.id}/item_edit',
+                         data={'descricao': 'A new list item edited', 'cliente': 'Nalveira', 'valor_compra': '50',
+                               'data_venda': '01/07/2018', 'status': '0'})
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.descricao, 'A new list item edited')
+        self.assertEqual(new_item.cliente, 'Nalveira')
+        self.assertEqual(new_item.valor_compra, Decimal(50))
+        self.assertEqual(new_item.data_venda, date.today())
+        self.assertEqual(new_item.status, '0')

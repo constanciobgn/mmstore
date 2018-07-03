@@ -29,3 +29,10 @@ class MMStoreAdminTest(TestCase):
         self.assertIn('id="id_data_recebimento"', form.as_p())
         self.assertIn('id="id_valor"', form.as_p())
         self.assertIn('id="id_status"', form.as_p())
+
+    def test_uses_item_form_in_item_edit(self):
+        list_ = List.objects.create()
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
+        self.assertIsInstance(response.context['form'], ItemForm)

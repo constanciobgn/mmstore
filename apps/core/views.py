@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from apps.core.forms import ItemForm, ParcelaForm
@@ -44,3 +44,15 @@ def item_delete(request, list_pk, item_pk):
     item = Item.objects.get(id=item_pk)
     item.delete()
     return redirect(reverse('mmstore_admin'))
+
+
+def item_edit(request, list_pk, item_pk):
+    item = get_object_or_404(Item, pk=item_pk)
+    form = ItemForm(data=request.POST or None, instance=item)
+    if request.method == 'POST':
+        if form.is_valid():
+            Item.objects.filter(id=item_pk).update(descricao=request.POST['descricao'], cliente=request.POST['cliente'],
+                                                   valor_compra=request.POST['valor_compra'],
+                                                   status=request.POST['status'])
+            return redirect(reverse('mmstore_admin'))
+    return render(request, 'apps/core/item_edit.html', {'form': form, 'item': item, })

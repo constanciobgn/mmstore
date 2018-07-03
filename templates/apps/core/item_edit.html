@@ -435,7 +435,7 @@
 
                             <div class="card-body">
 
-                                <form action="/core/lists/new" method="post">
+                                <form action="/core/lists/{{ 0 }}/items/{{ item.id }}/item_edit" method="post">
 
                                     {% csrf_token %}
 
@@ -477,55 +477,6 @@
                         </div><!-- end card-->
                     </div>
 
-                </div>
-
-                <div class="row">
-
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h3><i class="fa fa-table"></i> Lista de Vendas</h3>
-                            </div>
-
-                            <div class="card-body">
-
-                                <table class="table table-responsive-xl" id="id_item_list_table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Descrição</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">Valor Compra</th>
-                                        <th scope="col">Valor Venda</th>
-                                        <th scope="col">Data Venda</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Ações</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for item in items %}
-                                        <tr>
-                                            <th scope="row">{{ forloop.counter }}</th>
-                                            <td> {{ item.descricao }} </td>
-                                            <td> {{ item.cliente }} </td>
-                                            <td> {{ item.valor_compra }} </td>
-                                            <td> {{ item.valor_venda }} </td>
-                                            <td> {{ item.data_venda }} </td>
-                                            <td> {{ item.get_status_display }} </td>
-                                            <td>
-                                                <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
-                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
-                                                <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a> |
-                                                <a href="{% url 'item_edit' 0 item.pk %}">Editar</a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div><!-- end card-->
-                    </div>
                 </div>
 
             </div>
