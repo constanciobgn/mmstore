@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from apps.core.models import Item, List, Parcela
 
+from apps.core.forms import PrecoForm
+
 
 class HelloWorldTest(TestCase):
 
@@ -133,3 +135,19 @@ class MMStoreAdminTest(TestCase):
         self.assertEqual(new_item.valor_compra, Decimal(50))
         self.assertEqual(new_item.data_venda, date.today())
         self.assertEqual(new_item.status, '0')
+
+    def test_status_code(self):
+        response = self.client.get(f'/core/precos/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        response = self.client.get(f'/core/precos/')
+        self.assertTemplateUsed(response, 'apps/core/precos.html')
+
+    def test_uses_parcela_form(self):
+        response = self.client.get(f'/core/precos/')
+        self.assertIsInstance(response.context['form'], PrecoForm)
+
+    def test_exists_ids_in_form_precos(self):
+        form = PrecoForm()
+        self.assertIn('id="id_preco"', form.as_p())

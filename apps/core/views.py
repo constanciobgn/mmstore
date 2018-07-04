@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from apps.core.forms import ItemForm, ParcelaForm
+from apps.core.forms import ItemForm, ParcelaForm, PrecoForm
 from apps.core.models import List, Item
 
 
@@ -14,6 +14,30 @@ def mmstore_admin(request):
     form = ItemForm()
     items = Item.objects.all()
     return render(request, 'apps/core/index.html', {'form': form, 'items': items})
+
+
+def precos(request):
+    form = PrecoForm(data=request.POST)
+
+    if form.is_valid():
+        item_price = form.cleaned_data['preco']
+
+        sale_price_60 = item_price * 160 / 100
+        sale_price_70 = item_price * 170 / 100
+        sale_price_80 = item_price * 180 / 100
+        sale_price_100 = item_price * 200 / 100
+
+        return render(request, 'apps/core/precos.html', {'form': PrecoForm(),
+                                                                'sale_price_60': [sale_price_60,
+                                                                                  sale_price_60 - item_price],
+                                                                'sale_price_70': [sale_price_70,
+                                                                                  sale_price_70 - item_price],
+                                                                'sale_price_80': [sale_price_80,
+                                                                                  sale_price_80 - item_price],
+                                                                'sale_price_100': [sale_price_100,
+                                                                                   sale_price_100 - item_price]
+                                                                })
+    return render(request, 'apps/core/precos.html', {'form': form})
 
 
 def new_list(request):

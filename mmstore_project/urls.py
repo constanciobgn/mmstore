@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit
+from apps.core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, precos
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +24,7 @@ urlpatterns = [
     path('hello/', hello_world, name='hello_world'),
 
     path('core/', mmstore_admin, name='mmstore_admin'),
+    path('core/precos/', precos, name='precos'),
     path('core/lists/new', new_list, name='new_list'),
     path('core/lists/<int:list_pk>/items/<int:item_pk>', item_detail, name='item_detail'),
     path('core/lists/<int:list_pk>/items/<int:item_pk>/add_parcela', add_parcela, name='add_parcela'),

@@ -25,3 +25,6 @@ class ParcelaForm(forms.models.ModelForm):
     def save(self, for_item):
         self.instance.item = for_item
         return super().save()
+
+class PrecoForm(forms.Form):
+    preco = forms.DecimalField()
