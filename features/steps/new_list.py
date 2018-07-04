@@ -1,24 +1,7 @@
-import time
-
 from behave import when, then
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 
-MAX_WAIT = 10
-
-
-def wait_for_row_in_list_table(context, id_table, row_text):
-    start_time = time.time()
-    while True:
-        try:
-            table = context.browser.find_element_by_id(id_table)
-            rows = table.find_elements_by_tag_name('tr')
-            context.test.assertIn(row_text, [row.text for row in rows])
-            return
-        except (AssertionError, WebDriverException) as e:
-            if time.time() - start_time > MAX_WAIT:
-                raise e
-            time.sleep(0.5)
+from features.steps.utils import wait_for_row_in_list_table
 
 
 @when(u'o usuário acessa a url "{url}" relativa a criação de lista de vendas')
