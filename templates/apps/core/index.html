@@ -262,14 +262,17 @@
 
                 <ul>
                     <li class="submenu">
-                        <a class="active" href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span> </a>
+                        <a class="active" href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span>
+                        </a>
                     </li>
 
                     <li class="submenu">
-                        <a href="{% url 'precos' %}"><i class="fa fa-fw fa-calculator"></i><span> Preços </span> </a>
+                        <a href="#"><i class="fa fa-fw fa-th"></i> <span> Plugins </span> <span
+                                class="menu-arrow"></span></a>
+                        <ul class="list-unstyled">
+                            <a href="{% url 'precos' %}"><i class="fa fa-fw fa-calculator"></i><span> Preços </span> </a>
+                        </ul>
                     </li>
-
-
 
                     {% comment %}
                     <li class="submenu">

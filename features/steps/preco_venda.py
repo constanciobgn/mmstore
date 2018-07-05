@@ -1,4 +1,7 @@
+import time
+
 from behave import when, then
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 @when(u'ele clicar no link "Preços" dentro do submenu "Plugins"')
@@ -6,7 +9,13 @@ def step_impl(context):
     context.browser.get(context.get_url('/core/'))
     context.test.assertRegex(context.browser.current_url, 'core/')
 
-    link_precos = context.browser.find_element_by_link_text('Preços')
+    actions = ActionChains(context.browser)
+    actions.move_to_element(
+        context.browser.find_element_by_xpath('/html/body/div[1]/div[2]/div/div[1]/ul/li[2]/a')).click().perform()
+
+    time.sleep(1)
+
+    link_precos = context.browser.find_element_by_xpath('/html/body/div[1]/div[2]/div/div[1]/ul/li[2]/ul/a/span')
     context.test.assertTrue(link_precos.is_displayed())
     link_precos.click()
 
