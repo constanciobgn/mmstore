@@ -13,7 +13,9 @@ def hello_world(request):
 def mmstore_admin(request):
     form = ItemForm()
     items = Item.objects.all()
-    return render(request, 'apps/core/index.html', {'form': form, 'items': items})
+    items_parcelas_atrasadas = Item.objects.all()
+    return render(request, 'apps/core/index.html',
+                  {'form': form, 'items': items, 'items_parcelas_atrasadas': items_parcelas_atrasadas, })
 
 
 def precos(request):
@@ -28,15 +30,15 @@ def precos(request):
         sale_price_100 = item_price * 200 / 100
 
         return render(request, 'apps/core/precos.html', {'form': PrecoForm(),
-                                                                'sale_price_60': [sale_price_60,
-                                                                                  sale_price_60 - item_price],
-                                                                'sale_price_70': [sale_price_70,
-                                                                                  sale_price_70 - item_price],
-                                                                'sale_price_80': [sale_price_80,
-                                                                                  sale_price_80 - item_price],
-                                                                'sale_price_100': [sale_price_100,
-                                                                                   sale_price_100 - item_price]
-                                                                })
+                                                         'sale_price_60': [sale_price_60,
+                                                                           sale_price_60 - item_price],
+                                                         'sale_price_70': [sale_price_70,
+                                                                           sale_price_70 - item_price],
+                                                         'sale_price_80': [sale_price_80,
+                                                                           sale_price_80 - item_price],
+                                                         'sale_price_100': [sale_price_100,
+                                                                            sale_price_100 - item_price]
+                                                         })
     return render(request, 'apps/core/precos.html', {'form': form})
 
 

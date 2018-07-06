@@ -7,7 +7,7 @@ from apps.core.forms import ItemForm, ParcelaForm
 from apps.core.models import List, Item
 
 
-class MMStoreAdminTest(TestCase):
+class ItemFormTest(TestCase):
 
     def test_exists_ids_in_form_item(self):
         form = ItemForm()
@@ -17,12 +17,15 @@ class MMStoreAdminTest(TestCase):
         self.assertIn('id="id_data_venda"', form.as_p())
         self.assertIn('id="id_status"', form.as_p())
 
-    def test_uses_parcela_form(self):
+    def test_uses_item_form_in_item_edit(self):
         list_ = List.objects.create()
         item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
                                    data_venda=date.today(), status='0', list=list_)
-        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
-        self.assertIsInstance(response.context['form'], ParcelaForm)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
+        self.assertIsInstance(response.context['form'], ItemForm)
+
+
+class ParcelaFormTest(TestCase):
 
     def test_exists_ids_in_form_parcela(self):
         form = ParcelaForm()
@@ -30,9 +33,11 @@ class MMStoreAdminTest(TestCase):
         self.assertIn('id="id_valor"', form.as_p())
         self.assertIn('id="id_status"', form.as_p())
 
-    def test_uses_item_form_in_item_edit(self):
+    def test_uses_parcela_form(self):
         list_ = List.objects.create()
         item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
                                    data_venda=date.today(), status='0', list=list_)
-        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
-        self.assertIsInstance(response.context['form'], ItemForm)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
+        self.assertIsInstance(response.context['form'], ParcelaForm)
+
+

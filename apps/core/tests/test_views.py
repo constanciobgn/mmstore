@@ -43,6 +43,7 @@ class NewListTest(TestCase):
                                'data_venda': f'{ date.today().strftime("%d/%m/%Y") }', 'status': '0'})
 
         self.assertEqual(Item.objects.count(), 1)
+
         new_item = Item.objects.first()
         self.assertEqual(new_item.descricao, 'A new list item')
         self.assertEqual(new_item.cliente, 'Nalveira')
@@ -58,8 +59,20 @@ class NewListTest(TestCase):
         self.assertRedirects(response, '/core/')
 
     def test_view_returns_items(self):
+        list_ = List.objects.create()
+        Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                            data_venda=date.today(), status='0', list=list_)
+
         response = self.client.get('/core/')
-        self.assertQuerysetEqual(response.context['items'], Item.objects.all())
+        self.assertQuerysetEqual(response.context['items'], ['<Item: Item object (1)>'])
+
+    def test_view_returns_items_com_parcelas_atrasadas(self):
+        list_ = List.objects.create()
+        Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                            data_venda=date.today(), status='0', list=list_)
+
+        response = self.client.get('/core/')
+        self.assertQuerysetEqual(response.context['items_parcelas_atrasadas'], ['<Item: Item object (1)>'])
 
 
 class MMStoreAdminTest(TestCase):
