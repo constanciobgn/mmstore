@@ -4,9 +4,8 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from apps.core.models import Item, List, Parcela
-
 from apps.core.forms import PrecoForm
+from apps.core.models import Item, List, Parcela
 
 
 class HelloWorldTest(TestCase):
@@ -20,7 +19,7 @@ class HelloWorldTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class MMStoreAdminTest(TestCase):
+class NewListTest(TestCase):
 
     def test_status_code(self):
         response = self.client.get('/core/')
@@ -38,14 +37,10 @@ class MMStoreAdminTest(TestCase):
         response = self.client.get(reverse('mmstore_admin'))
         self.assertTemplateNotUsed(response, 'apps/core/fake.html')
 
-    def test_view_returns_items(self):
-        response = self.client.get('/core/')
-        self.assertQuerysetEqual(response.context['items'], Item.objects.all())
-
     def test_can_save_a_POST_request(self):
         self.client.post('/core/lists/new',
                          data={'descricao': 'A new list item', 'cliente': 'Nalveira', 'valor_compra': '50',
-                               'data_venda': '01/07/2018', 'status': '0'})
+                               'data_venda': f'{ date.today().strftime("%d/%m/%Y") }', 'status': '0'})
 
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
@@ -54,6 +49,20 @@ class MMStoreAdminTest(TestCase):
         self.assertEqual(new_item.valor_compra, Decimal(50))
         self.assertEqual(new_item.data_venda, date.today())
         self.assertEqual(new_item.status, '0')
+
+    def test_redirects_after_POST(self):
+        response = self.client.post('/core/lists/new',
+                                    data={'descricao': 'A new list item', 'cliente': 'Nalveira', 'valor_compra': '50',
+                                          'data_venda': '01/07/2018', 'status': '0'})
+
+        self.assertRedirects(response, '/core/')
+
+    def test_view_returns_items(self):
+        response = self.client.get('/core/')
+        self.assertQuerysetEqual(response.context['items'], Item.objects.all())
+
+
+class MMStoreAdminTest(TestCase):
 
     def test_status_code(self):
         list_ = List.objects.create()
