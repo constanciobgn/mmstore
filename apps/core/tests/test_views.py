@@ -38,6 +38,10 @@ class MMStoreAdminTest(TestCase):
         response = self.client.get(reverse('mmstore_admin'))
         self.assertTemplateNotUsed(response, 'apps/core/fake.html')
 
+    def test_view_returns_items(self):
+        response = self.client.get('/core/')
+        self.assertQuerysetEqual(response.context['items'], Item.objects.all())
+
     def test_can_save_a_POST_request(self):
         self.client.post('/core/lists/new',
                          data={'descricao': 'A new list item', 'cliente': 'Nalveira', 'valor_compra': '50',
