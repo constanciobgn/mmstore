@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 from django.test import TestCase
@@ -68,11 +68,23 @@ class NewListTest(TestCase):
 
     def test_view_returns_items_com_parcelas_atrasadas(self):
         list_ = List.objects.create()
-        Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
-                            data_venda=date.today(), status='0', list=list_)
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+
+        item = Item.objects.create(descricao='Blusa vermelha', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        Parcela.objects.create(data_recebimento=date.today() - timedelta(days=1), valor=Decimal(25), status='0',
+                               item=item)
+
+        saved_parcelas = Parcela.objects.all()
+        self.assertEqual(saved_parcelas.count(), 2)
 
         response = self.client.get('/core/')
-        self.assertQuerysetEqual(response.context['items_parcelas_atrasadas'], ['<Item: Item object (1)>'])
+        self.assertQuerysetEqual(response.context['items_atrasados'], ['<Item: Item object (2)>'])
 
 
 class MMStoreAdminTest(TestCase):

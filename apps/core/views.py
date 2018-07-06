@@ -1,9 +1,11 @@
+from datetime import date
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from apps.core.forms import ItemForm, ParcelaForm, PrecoForm
-from apps.core.models import List, Item
+from apps.core.models import List, Item, Parcela
 
 
 def hello_world(request):
@@ -13,9 +15,10 @@ def hello_world(request):
 def mmstore_admin(request):
     form = ItemForm()
     items = Item.objects.all()
-    items_parcelas_atrasadas = Item.objects.all()
+    parcelas_atrasadas = Parcela.objects.filter(data_recebimento__lt=date.today(), status__exact='0')
+    items_atrasados = Item.objects.filter(pk__in=parcelas_atrasadas.values_list('item_id', flat=True)).distinct()
     return render(request, 'apps/core/index.html',
-                  {'form': form, 'items': items, 'items_parcelas_atrasadas': items_parcelas_atrasadas, })
+                  {'form': form, 'items': items, 'items_atrasados': items_atrasados, })
 
 
 def precos(request):
