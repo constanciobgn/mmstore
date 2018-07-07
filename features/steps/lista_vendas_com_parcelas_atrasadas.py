@@ -11,7 +11,7 @@ def step_impl(context):
     link_parcela.click()
 
     context.browser.find_element_by_id('id_data_recebimento').clear()
-    context.browser.find_element_by_id('id_data_recebimento').send_keys(f'{ (date.today() - timedelta(days=1)).strftime("%d/%m/%Y") }')
+    context.browser.find_element_by_id('id_data_recebimento').send_keys(f'{ (date.today() - timedelta(days=2)).strftime("%d/%m/%Y") }')
 
     context.browser.find_element_by_id('id_valor').send_keys('25')
 
@@ -26,5 +26,5 @@ def step_impl(context):
 @then(u'ele percebe que sua venda está na lista de vendas com parcelas em atraso')
 def step_impl(context):
     context.browser.get(context.get_url('/core/'))
-    wait_for_row_in_list_table(context, 'id_lista_vendas_com_parcelas_atradas',
+    wait_for_row_in_list_table(context, 'id_lista_vendas_com_parcelas_atrasadas',
                                '1 Blusa vermelha Nalveira 50,00 25,00 29 de Junho de 2018 Recebendo Parcelar | Detalhar | Excluir | Editar')
