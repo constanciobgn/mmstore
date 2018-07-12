@@ -189,3 +189,54 @@ class MMStoreAdminTest(TestCase):
     def test_exists_ids_in_form_precos(self):
         form = PrecoForm()
         self.assertIn('id="id_preco"', form.as_p())
+
+
+class ParcelaDeleteTest(TestCase):
+
+    # def test_status_code(self):
+    #     list_ = List.objects.create()
+    #
+    #     item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+    #                                data_venda=date.today(), status='0', list=list_)
+    #
+    #     parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+    #
+    #     response = self.client.get(f'/core/lists/{list_.pk}/items/{item.pk}/parcelas/{parcela.pk}/parcela_delete')
+    #     self.assertEqual(response.status_code, 200)
+
+    # def test_view_url_by_name(self):
+    #     list_ = List.objects.create()
+    #
+    #     item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+    #                                data_venda=date.today(), status='0', list=list_)
+    #
+    #     parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+    #
+    #     response = self.client.get(
+    #         reverse('parcela_delete', kwargs={'list_pk': list_.pk, 'item_pk': item.pk, 'parcela_pk': parcela.pk}))
+    #     self.assertEqual(response.status_code, 200)
+
+    def test_delete(self):
+        list_ = List.objects.create()
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+
+        self.client.post(
+            reverse('parcela_delete', kwargs={'list_pk': list_.pk, 'item_pk': item.pk, 'parcela_pk': parcela.pk}))
+
+        self.assertEqual(Parcela.objects.count(), 0)
+
+    def test_redirects_after_POST(self):
+        list_ = List.objects.create()
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+
+        response = self.client.post(
+            reverse('parcela_delete', kwargs={'list_pk': list_.pk, 'item_pk': item.pk, 'parcela_pk': parcela.pk}))
+        self.assertRedirects(response, reverse('item_detail', kwargs={'list_pk': list_.pk, 'item_pk': item.pk}))

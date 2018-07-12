@@ -87,3 +87,9 @@ def item_edit(request, list_pk, item_pk):
                                                    status=form.cleaned_data['status'])
             return redirect(reverse('mmstore_admin'))
     return render(request, 'apps/core/item_edit.html', {'form': form, 'item': item, })
+
+
+def parcela_delete(request, list_pk, item_pk, parcela_pk):
+    parcela = Parcela.objects.get(id=parcela_pk)
+    parcela.delete()
+    return redirect(reverse('item_detail', kwargs={'list_pk': list_pk, 'item_pk': item_pk}))

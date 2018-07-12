@@ -5,6 +5,7 @@ from features.steps.utils import wait_for_row_in_list_table
 
 @when(u'o usuário clicar no link de detalhar a venda')
 def step_impl(context):
+    context.browser.get(context.get_url('/core/'))
     context.browser.find_element_by_link_text('Detalhar').click()
 
 
@@ -25,8 +26,7 @@ def step_impl(context):
     context.test.assertTrue(context.browser.find_element_by_id('id_status').is_displayed)
     context.browser.find_element_by_id('id_status').send_keys('0')
     context.browser.find_element_by_id('id_btn_salvar').click()
-    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 29 de Junho de 2018 25,00 Pendente')
-    context.browser.get(context.get_url('/core/'))
+    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 29 de Junho de 2018 25,00 Pendente Excluir')
 
 
 @then(u'ele verá os detalhes da venda e da parcela cadastrada')

@@ -486,6 +486,7 @@
                                         <th scope="col">Data de Vencimento</th>
                                         <th scope="col">Valor</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Ações</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -495,6 +496,9 @@
                                             <td> {{ parcela.data_recebimento }} </td>
                                             <td> {{ parcela.valor }} </td>
                                             <td> {{ parcela.get_status_display }} </td>
+                                            <td>
+                                                <a href="{% url 'parcela_delete' 0 item.pk parcela.pk %}">Excluir</a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

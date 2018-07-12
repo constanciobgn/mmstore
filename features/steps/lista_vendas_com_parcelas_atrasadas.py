@@ -19,7 +19,7 @@ def step_impl(context):
 
     context.browser.find_element_by_id('id_btn_salvar').click()
 
-    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 9 de Julho de 2018 25,00 Pendente')
+    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 9 de Julho de 2018 25,00 Pendente Excluir')
 
 
 @then(u'ele percebe que sua venda está na lista de vendas com parcelas em atraso')
