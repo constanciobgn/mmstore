@@ -33,4 +33,4 @@ def step_impl(context):
 def step_impl(context):
     wait_for_row_in_list_table(context, 'id_item_list_table',
                                'Blusa vermelha Nalveira 50,00 25,00 29 de Junho de 2018 Recebendo Parcelar')
-    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 29 de Junho de 2018 25,00 Pendente')
+    wait_for_row_in_list_table(context, 'id_parcela_list_table', '1 29 de Junho de 2018 25,00 Pendente Excluir')
