@@ -9,11 +9,9 @@ Funcionalidade: Logar no sistema
 
     Quando o usuário acessa a url "/core/"
 
-    E clicar no link "Entrar"
-
     E inserir o email "user@exemplo.com" na caixa de texto
 
-    E pressionar a tecla "ENTER" no teclado
+    E clicar no link "Entrar"
 
     Então uma mensagem aparece informando-lhe que um email foi enviado
 

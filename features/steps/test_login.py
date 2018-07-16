@@ -3,17 +3,9 @@ import time
 
 from behave import when, then
 from django.core import mail
-from selenium.webdriver.common.keys import Keys
 
 TEST_EMAIL = 'user@exemplo.com'
 SUBJECT = 'Your login link for MMStore'
-
-
-@when(u'clicar no link "Entrar"')
-def step_impl(context):
-    link_login = context.browser.find_element_by_link_text('Entrar')
-    context.test.assertTrue(link_login.is_displayed())
-    link_login.click()
 
 
 @when(u'inserir o email "user@exemplo.com" na caixa de texto')
@@ -23,9 +15,11 @@ def step_impl(context):
     context.inputmail.send_keys(TEST_EMAIL)
 
 
-@when(u'pressionar a tecla "ENTER" no teclado')
+@when(u'clicar no link "Entrar"')
 def step_impl(context):
-    context.inputmail.send_keys(Keys.ENTER)
+    btn_login = context.browser.find_element_by_id('id_btn_login')
+    context.test.assertTrue(btn_login.is_displayed())
+    btn_login.click()
 
 
 @then(u'uma mensagem aparece informando-lhe que um email foi enviado')
