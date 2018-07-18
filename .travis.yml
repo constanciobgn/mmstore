@@ -25,7 +25,7 @@ script:
   - python manage.py makemigrations
   - python manage.py migrate
   - coverage run --source=apps.core --omit=*/migrations/* manage.py test
-  #- python manage.py behave
+  - python manage.py behave
 
 # send coverage report to coveralls
 after_success: coveralls
