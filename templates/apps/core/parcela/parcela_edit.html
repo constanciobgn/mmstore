@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,13 +27,8 @@
     <!-- Custom CSS -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css"/>
 
-    <script src="{% static 'assets/js/modernizr.min.js' %}"></script>
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/moment.min.js' %}"></script>
-
-
     <!-- BEGIN CSS for this page -->
-    <link href="{% static 'assets/plugins/datetimepicker/css/daterangepicker.css' %}" rel="stylesheet"/>
+
     <!-- END CSS for this page -->
 
 </head>
@@ -238,19 +233,6 @@
 
                 {% endcomment %}
 
-                {% if user.email %}
-                    <p>Logged is as {{ user.email }}</p>
-                    <a href="#">Log out</a>
-                {% else %}
-                    <form class="form-inline my-2 my-lg-1" method="post" action="{% url 'send_login_email' %}">
-                        {% csrf_token %}
-                        <input id="id_email" name="email" class="form-control mr-sm-2" placeholder="Digite seu email"
-                               type="text">
-                        <button id="id_btn_login" class="btn btn-primary my-2 my-sm-0" type="submit">Entrar</button>
-                    </form>
-                {% endif %}
-            </ul>
-
             </ul>
 
             <ul class="list-inline menu-left mb-0">
@@ -274,18 +256,9 @@
             <div id="sidebar-menu">
 
                 <ul>
-                    <li class="submenu">
-                        <a class="active" href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span>
-                        </a>
-                    </li>
 
                     <li class="submenu">
-                        <a href="#"><i class="fa fa-fw fa-th"></i> <span> Plugins </span> <span
-                                class="menu-arrow"></span></a>
-                        <ul class="list-unstyled">
-                            <a href="{% url 'precos' %}"><i class="fa fa-fw fa-calculator"></i><span> Preços </span>
-                            </a>
-                        </ul>
+                        <a href="{% url 'mmstore_admin' %}"><i class="fa fa-fw fa-money"></i><span> Vendas </span> </a>
                     </li>
 
                     {% comment %}
@@ -363,19 +336,15 @@
                         </ul>
                     </li>
 
-                    {% endcomment %}
-
-                    {% comment %}
                     <li class="submenu">
                         <a href="#" class="active"><span class="label radius-circle bg-danger float-right">20</span><i
                                 class="fa fa-fw fa-copy"></i><span> Example Pages </span></a>
                         <ul class="list-unstyled">
-
                             <li><a href="page-pricing-tables.html">Pricing Tables</a></li>
                             <li><a target="_blank" href="page-coming-soon.html">Countdown</a></li>
                             <li><a href="page-invoice.html">Invoice</a></li>
                             <li><a href="page-login.html">Login / Register</a></li>
-                            <li class="active"><a href="{% url 'mmstore_admin' %}">Blank Page</a></li>
+                            <li class="active"><a href="page-blank.html">Blank Page</a></li>
                         </ul>
                     </li>
                     {% endcomment %}
@@ -438,24 +407,6 @@
 
             <div class="container-fluid">
 
-                {% if messages %}
-                    <div class="row">
-                        <div class="col-xl-12">
-                            {% for message in messages %}
-                                {% if message.level_tags == 'success' %}
-                                    <div class="alert alert-success" role="alert">
-                                        {{ message }}
-                                    </div>
-                                {% else %}
-                                    <div class="alert alert-warning" role="alert">
-                                        {{ message }}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-
 
                 <div class="row">
                     <div class="col-xl-12">
@@ -476,93 +427,21 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <h3><i class="fa fa-table"></i> Lista de Vendas com Parcelas Atradas</h3>
+                                <h3><i class="fa fa-check-square-o"></i> Editar Parcela</h3>
                             </div>
 
                             <div class="card-body">
 
-                                <table class="table table-responsive-xl" id="id_lista_vendas_com_parcelas_atrasadas">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Descrição</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">Valor Compra</th>
-                                        <th scope="col">Valor Venda</th>
-                                        <th scope="col">Data Venda</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Ações</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for item in items_atrasados %}
-                                        <tr>
-                                            <th scope="row">{{ forloop.counter }}</th>
-                                            <td> {{ item.descricao }} </td>
-                                            <td> {{ item.cliente }} </td>
-                                            <td> {{ item.valor_compra }} </td>
-                                            <td> {{ item.valor_venda }} </td>
-                                            <td> {{ item.data_venda }} </td>
-                                            <td> {{ item.get_status_display }} </td>
-                                            <td>
-                                                <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
-                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
-                                                <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a> |
-                                                <a href="{% url 'item_edit' 0 item.pk %}">Editar</a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div><!-- end card-->
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h3><i class="fa fa-check-square-o"></i> Cadastrar Venda</h3>
-                            </div>
-
-                            <div class="card-body">
-
-                                <form action="/core/lists/new" method="post">
+                                <form action="/core/lists/{{ 0 }}/items/{{ item.id }}/parcelas/{{ parcela.id }}/parcela_edit" method="post">
 
                                     {% csrf_token %}
 
-                                    <div class="form-group">
-                                        <label for="{{ form.descricao.id_for_label }}">{{ form.descricao.label }}</label>
-                                        {% render_field form.descricao class="form-control" %}
-
-                                        <label for="{{ form.cliente.id_for_label }}">{{ form.cliente.label }}</label>
-                                        {% render_field form.cliente class="form-control" %}
-
-                                        <label for="{{ form.valor_compra.id_for_label }}">{{ form.valor_compra.label }}</label>
-                                        {% render_field form.valor_compra class="form-control" %}
-
-                                        <label for="{{ form.data_venda.id_for_label }}">{{ form.data_venda.label }}</label>
-                                        {% render_field form.data_venda class="form-control" %}
-
-                                        <script>
-                                            $(function () {
-                                                $('input[name="data_venda"]').daterangepicker({
-                                                    singleDatePicker: true,
-                                                    showDropdowns: true,
-                                                    locale: {
-                                                        format: 'DD/MM/YYYY'
-                                                    }
-                                                });
-                                            });
-                                        </script>
-
-                                        <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
-                                        {% render_field form.status class="form-control" %}
-                                    </div>
-
+                                    {% for field in form.visible_fields %}
+                                        <div class="form-group">
+                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                            {% render_field field class="form-control" %}
+                                        </div>
+                                    {% endfor %}
 
                                     <button id="id_btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
 
@@ -579,39 +458,30 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <h3><i class="fa fa-table"></i> Lista de Vendas</h3>
+                                <h3><i class="fa fa-table"></i> Parcelas</h3>
                             </div>
 
                             <div class="card-body">
 
-                                <table class="table table-responsive-xl" id="id_item_list_table">
+                                <table class="table table-responsive-xl" id="id_parcela_list_table">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Descrição</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">Valor Compra</th>
-                                        <th scope="col">Valor Venda</th>
-                                        <th scope="col">Data Venda</th>
+                                        <th scope="col">Data de Vencimento</th>
+                                        <th scope="col">Valor</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Ações</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for item in items %}
+                                    {% for parcela in item.parcela_set.all %}
                                         <tr>
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td> {{ item.descricao }} </td>
-                                            <td> {{ item.cliente }} </td>
-                                            <td> {{ item.valor_compra }} </td>
-                                            <td> {{ item.valor_venda }} </td>
-                                            <td> {{ item.data_venda }} </td>
-                                            <td> {{ item.get_status_display }} </td>
+                                            <td> {{ parcela.data_recebimento }} </td>
+                                            <td> {{ parcela.valor }} </td>
+                                            <td> {{ parcela.get_status_display }} </td>
                                             <td>
-                                                <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
-                                                <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
-                                                <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a> |
-                                                <a href="{% url 'item_edit' 0 item.pk %}">Editar</a>
+                                                <a href="{% url 'parcela_delete' 0 item.pk parcela.pk %}">Excluir</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -624,6 +494,7 @@
                 </div>
 
             </div>
+
 
         </div>
         <!-- END container-fluid -->
@@ -646,6 +517,10 @@
 </div>
 <!-- END main -->
 
+<script src="{% static 'assets/js/modernizr.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/moment.min.js' %}"></script>
+
 <script src="{% static 'assets/js/popper.min.js' %}"></script>
 <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 
@@ -660,8 +535,7 @@
 <script src="{% static 'assets/js/pikeadmin.js' %}"></script>
 
 <!-- BEGIN Java Script for this page -->
-<script src="{% static 'assets/plugins/datetimepicker/js/moment.min.js' %}"></script>
-<script src="{% static 'assets/plugins/datetimepicker/js/daterangepicker.js' %}"></script>
+
 <!-- END Java Script for this page -->
 
 

@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from accounts.views import send_login_email, login
 from apps.core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
-    precos, parcela_delete
+    precos, parcela_delete, parcela_edit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +32,10 @@ urlpatterns = [
     path('core/lists/<int:list_pk>/items/<int:item_pk>/add_parcela', add_parcela, name='add_parcela'),
     path('core/lists/<int:list_pk>/items/<int:item_pk>/item_delete', item_delete, name='item_delete'),
     path('core/lists/<int:list_pk>/items/<int:item_pk>/item_edit', item_edit, name='item_edit'),
-    path('core/lists/<int:list_pk>/items/<int:item_pk>/parcelas/<int:parcela_pk>/parcela_delete', parcela_delete, name='parcela_delete'),
+    path('core/lists/<int:list_pk>/items/<int:item_pk>/parcelas/<int:parcela_pk>/parcela_delete', parcela_delete,
+         name='parcela_delete'),
+    path('core/lists/<int:list_pk>/items/<int:item_pk>/parcelas/<int:parcela_pk>/parcela_edit', parcela_edit,
+         name='parcela_edit'),
+    path('accounts/send_login_email', send_login_email, name='send_login_email'),
+    path('accounts/login', login, name='login'),
 ]

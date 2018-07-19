@@ -497,7 +497,8 @@
                                             <td> {{ parcela.valor }} </td>
                                             <td> {{ parcela.get_status_display }} </td>
                                             <td>
-                                                <a href="{% url 'parcela_delete' 0 item.pk parcela.pk %}">Excluir</a>
+                                                <a href="{% url 'parcela_delete' 0 item.pk parcela.pk %}">Excluir</a> |
+                                                <a href="{% url 'parcela_edit' 0 item.pk parcela.pk %}">Editar</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -191,6 +191,45 @@ class MMStoreAdminTest(TestCase):
         self.assertIn('id="id_preco"', form.as_p())
 
 
+class ParcelaEditTest(TestCase):
+
+    def test_status_code(self):
+        list_ = List.objects.create()
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/parcelas/{parcela.id}/parcela_edit')
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        list_ = List.objects.create()
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+        response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/parcelas/{parcela.id}/parcela_edit')
+        self.assertTemplateUsed(response, 'apps/core/parcela/parcela_edit.html')
+
+    def test_can_save_a_POST_request(self):
+        list_ = List.objects.create()
+
+        item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
+                                   data_venda=date.today(), status='0', list=list_)
+
+        parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
+
+        self.client.post(f'/core/lists/{list_.id}/items/{item.id}/parcelas/{parcela.id}/parcela_edit',
+                         data={'data_recebimento': str(date.today()), 'valor': '14', 'status': '0'})
+
+        self.assertEqual(Parcela.objects.count(), 1)
+
+        parcela = Parcela.objects.first()
+        self.assertEqual(parcela.valor, Decimal(14))
+
+
 class ParcelaDeleteTest(TestCase):
 
     # def test_status_code(self):

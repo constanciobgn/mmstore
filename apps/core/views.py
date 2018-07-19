@@ -93,3 +93,16 @@ def parcela_delete(request, list_pk, item_pk, parcela_pk):
     parcela = Parcela.objects.get(id=parcela_pk)
     parcela.delete()
     return redirect(reverse('item_detail', kwargs={'list_pk': list_pk, 'item_pk': item_pk}))
+
+
+def parcela_edit(request, list_pk, item_pk, parcela_pk):
+    parcela = get_object_or_404(Parcela, pk=parcela_pk)
+    item = get_object_or_404(Item, pk=item_pk)
+    form = ParcelaForm(data=request.POST or None, instance=parcela)
+    if request.method == 'POST':
+        if form.is_valid():
+            Parcela.objects.filter(id=parcela_pk).update(data_recebimento=form.cleaned_data['data_recebimento'],
+                                                         valor=form.cleaned_data['valor'],
+                                                         status=form.cleaned_data['status'])
+            return redirect(reverse('item_detail', kwargs={'list_pk': list_pk, 'item_pk': item_pk}))
+    return render(request, 'apps/core/parcela/parcela_edit.html', {'form': form, 'item': item, 'parcela': parcela})
