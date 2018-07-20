@@ -20,9 +20,12 @@ from accounts.views import send_login_email, login
 from core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
     precos, parcela_delete, parcela_edit
 
+from landing.views import landing_page
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('', landing_page, name='landing_page'),
     path('hello/', hello_world, name='hello_world'),
 
     path('core/', mmstore_admin, name='mmstore_admin'),
