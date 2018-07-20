@@ -6,3 +6,5 @@ db.sqlite3
 .coverage
 staticfiles/
 .ipynb_checkpoints/
+.vscode/
+htmlcov/
