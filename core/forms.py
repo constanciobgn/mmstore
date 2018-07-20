@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.core.models import Item, Parcela
+from core.models import Item, Parcela
 
 
 class ItemForm(forms.models.ModelForm):

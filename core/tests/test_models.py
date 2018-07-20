@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from django.test import TestCase
 
-from apps.core.models import List, Item, Parcela
+from core.models import List, Item, Parcela
 
 
 class ListTest(TestCase):

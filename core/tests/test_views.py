@@ -4,8 +4,8 @@ from decimal import Decimal
 from django.test import TestCase
 from django.urls import reverse
 
-from apps.core.forms import PrecoForm
-from apps.core.models import Item, List, Parcela
+from core.forms import PrecoForm
+from core.models import Item, List, Parcela
 
 
 class HelloWorldTest(TestCase):

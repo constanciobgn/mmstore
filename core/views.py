@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from apps.core.forms import ItemForm, ParcelaForm, PrecoForm
-from apps.core.models import List, Item, Parcela
+from core.forms import ItemForm, ParcelaForm, PrecoForm
+from core.models import List, Item, Parcela
 
 
 def hello_world(request):

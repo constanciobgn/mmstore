@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from django.test import TestCase
 
-from apps.core.forms import ItemForm, ParcelaForm
-from apps.core.models import List, Item
+from core.forms import ItemForm, ParcelaForm
+from core.models import List, Item
 
 
 class ItemFormTest(TestCase):

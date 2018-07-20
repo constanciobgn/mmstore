@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_extensions',
 
-    'apps.core',
+    'core',
     'accounts',
 ]
 

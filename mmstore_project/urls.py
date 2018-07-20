@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from accounts.views import send_login_email, login
-from apps.core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
+from core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
     precos, parcela_delete, parcela_edit
 
 urlpatterns = [
