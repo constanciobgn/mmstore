@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'core',
-    'accounts',
+    'accounts.apps.AccountsConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
