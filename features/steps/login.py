@@ -3,7 +3,7 @@ import time
 
 from behave import when, then
 from django.core import mail
-from features.steps.utils import wait_for
+from features.steps.utils import wait_for, wait_to_be_logged_in, wait_to_be_logged_out
 
 TEST_EMAIL = 'user@exemplo.com'
 SUBJECT = 'Your login link for MMStore'
@@ -84,8 +84,7 @@ def step_impl(context):
 
     context.browser.get(context.url)
 
-    navbar = context.browser.find_element_by_css_selector('p')
-    context.test.assertIn(TEST_EMAIL, navbar.text)
+    wait_to_be_logged_in(context, TEST_EMAIL)
 
 
 @when(u'ele clica no link de logout')
@@ -97,6 +96,4 @@ def step_impl(context):
 
 @then(u'ele não está mais logado')
 def step_impl(context):
-    wait_for(context, lambda: context.browser.find_element_by_name('email'))
-    navbar = context.browser.find_element_by_css_selector('.navbar-custom')
-    context.test.assertNotIn(TEST_EMAIL, navbar.text)
+    wait_to_be_logged_out(context, TEST_EMAIL)
