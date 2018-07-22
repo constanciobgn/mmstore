@@ -1,7 +1,7 @@
 # language: pt
 # Created by constanciobgn at 13/07/18
 
-Funcionalidade: Logar no sistema
+Funcionalidade: Logar e logout no sistema
 
   Cenário: Login de um usuário no sistema
 
@@ -22,3 +22,13 @@ Funcionalidade: Logar no sistema
     Então ele clica no link do email
 
     E loga-se no sistema
+
+
+  Cenário: Logout de um usuário no sistema
+
+    Dado que existe um usuário logado no site da loja MMStore
+
+    Quando ele clica no link de logout
+
+    Então ele não está mais logado
+    

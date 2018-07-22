@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import logout
 
 from accounts.views import send_login_email, login
 from core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
@@ -41,4 +42,5 @@ urlpatterns = [
          name='parcela_edit'),
     path('accounts/send_login_email', send_login_email, name='send_login_email'),
     path('accounts/login', login, name='login'),
+    path('accounts/logout', logout, {'next_page': '/core/'}, name='logout'),
 ]

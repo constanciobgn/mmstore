@@ -240,7 +240,7 @@
 
                 {% if user.email %}
                     <p>Logged is as {{ user.email }}</p>
-                    <a href="#">Log out</a>
+                    <a href="{% url 'logout' %}">Log out</a>
                 {% else %}
                     <form class="form-inline my-2 my-lg-1" method="post" action="{% url 'send_login_email' %}">
                         {% csrf_token %}
