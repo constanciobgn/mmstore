@@ -606,7 +606,14 @@
                                             <td> {{ item.valor_compra }} </td>
                                             <td> {{ item.valor_venda }} </td>
                                             <td> {{ item.data_venda }} </td>
-                                            <td> {{ item.get_status_display }} </td>
+                                            
+                                            {% if item.get_status_display == 'Finalizado' %}
+                                                <td> <span class="badge badge-success badge-pill"> {{ item.get_status_display }} </span> </td>
+                                            {% else %}
+                                                <td> {{ item.get_status_display }} </td>
+                                            {% endif %}
+                                                
+                                            
                                             <td>
                                                 <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
                                                 <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
