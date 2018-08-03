@@ -2,6 +2,7 @@ from django.contrib import auth, messages
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.contrib.auth import logout
 
 from accounts.models import Token
 
@@ -26,4 +27,8 @@ def login(request):
     user = auth.authenticate(uid=request.GET.get('token'))
     if user:
         auth.login(request, user)
+    return redirect('/core/')
+
+def logout_view(request):
+    logout(request)
     return redirect('/core/')
