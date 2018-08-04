@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "64a5d2d6e3ca3f37eb3cb4c321eda28f6278a151ee5177ee231ca74be7bfbd27"
+            "sha256": "98671807233d2ac3b9087a8eab5828ed7ad11eecef4bf875c606bb783b21a4f6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -467,7 +467,6 @@
                 "sha256:923f299cc5ad920c68f2bc0bc98b75b9f838b93b599941a6b63ddbc2476394c0",
                 "sha256:d7cc528d76e76342423ca640335bd3633420dc1366f258cb31d05e865ef5ca1f"
             ],
-            "markers": "os_name != 'nt'",
             "version": "==0.6.0"
         },
         "pycodestyle": {
@@ -529,13 +528,6 @@
                 "sha256:fdced6cf08aaa5b0dacfa4562e518ffb562bb09a90483f920cf6c4ecabd3f379"
             ],
             "version": "==17.1.0"
-        },
-        "rope": {
-            "hashes": [
-                "sha256:a09edfd2034fd50099a67822f9bd851fbd0f4e98d3b87519f6267b60e50d80d1"
-            ],
-            "index": "pypi",
-            "version": "==0.10.7"
         },
         "send2trash": {
             "hashes": [

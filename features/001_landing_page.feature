@@ -1,6 +1,6 @@
 # language: pt
 
-Funcionalidade: Criação de uma landing page para loja MMStore
+Funcionalidade: Exibir uma landing page da loja MMStore
 
   Cenário: Acesso de um usuário qualquer a landing page da loja MMStore
 

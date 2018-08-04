@@ -7,7 +7,7 @@ url = "https://pypi.python.org/simple"
 
 [packages]
 
-django = "*"
+Django = "*"
 selenium = "<4"
 behave = "*"
 behave-django = "*"
@@ -24,7 +24,6 @@ django-extensions = "*"
 [dev-packages]
 
 pylint = "*"
-rope = "*"
 "autopep8" = "*"
 coverage = "*"
 ipython = {extras = ["notebook"]}
