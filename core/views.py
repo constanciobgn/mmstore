@@ -17,7 +17,7 @@ def mmstore_admin(request):
     items = Item.objects.all()
     parcelas_atrasadas = Parcela.objects.filter(data_recebimento__lt=date.today(), status__exact='0')
     items_atrasados = Item.objects.filter(pk__in=parcelas_atrasadas.values_list('item_id', flat=True)).distinct()
-    return render(request, 'apps/core/index.html',
+    return render(request, 'core/index.html',
                   {'form': form, 'items': items, 'items_atrasados': items_atrasados, })
 
 
@@ -32,7 +32,7 @@ def precos(request):
         sale_price_80 = item_price * 180 / 100
         sale_price_100 = item_price * 200 / 100
 
-        return render(request, 'apps/core/precos.html', {'form': PrecoForm(),
+        return render(request, 'core/precos.html', {'form': PrecoForm(),
                                                          'sale_price_60': [sale_price_60,
                                                                            sale_price_60 - item_price],
                                                          'sale_price_70': [sale_price_70,
@@ -42,7 +42,7 @@ def precos(request):
                                                          'sale_price_100': [sale_price_100,
                                                                             sale_price_100 - item_price]
                                                          })
-    return render(request, 'apps/core/precos.html', {'form': form})
+    return render(request, 'core/precos.html', {'form': form})
 
 
 def new_list(request):
@@ -51,7 +51,7 @@ def new_list(request):
         list_ = List.objects.create()
         form.save(for_list=list_)
         return redirect(reverse('mmstore_admin'))
-    return render(request, 'apps/core/index.html', {'form': form})
+    return render(request, 'core/index.html', {'form': form})
 
 
 def add_parcela(request, list_pk, item_pk):
@@ -61,12 +61,12 @@ def add_parcela(request, list_pk, item_pk):
         if form.is_valid():
             form.save(for_item=item)
             return redirect(f'/core/lists/0/items/{item.id}/add_parcela')
-    return render(request, 'apps/core/parcela/new.html', {'form': form, 'item': item, })
+    return render(request, 'core/parcela/new.html', {'form': form, 'item': item, })
 
 
 def item_detail(request, list_pk, item_pk):
     item = Item.objects.get(id=item_pk)
-    return render(request, 'apps/core/item_detail.html', {'item': item, })
+    return render(request, 'core/item_detail.html', {'item': item, })
 
 
 def item_delete(request, list_pk, item_pk):
@@ -86,7 +86,7 @@ def item_edit(request, list_pk, item_pk):
                                                    data_venda=form.cleaned_data['data_venda'],
                                                    status=form.cleaned_data['status'])
             return redirect(reverse('mmstore_admin'))
-    return render(request, 'apps/core/item_edit.html', {'form': form, 'item': item, })
+    return render(request, 'core/item_edit.html', {'form': form, 'item': item, })
 
 
 def parcela_delete(request, list_pk, item_pk, parcela_pk):
@@ -105,4 +105,4 @@ def parcela_edit(request, list_pk, item_pk, parcela_pk):
                                                          valor=form.cleaned_data['valor'],
                                                          status=form.cleaned_data['status'])
             return redirect(reverse('item_detail', kwargs={'list_pk': list_pk, 'item_pk': item_pk}))
-    return render(request, 'apps/core/parcela/parcela_edit.html', {'form': form, 'item': item, 'parcela': parcela})
+    return render(request, 'core/parcela/parcela_edit.html', {'form': form, 'item': item, 'parcela': parcela})

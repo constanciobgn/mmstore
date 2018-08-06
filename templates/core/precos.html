@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+
+
+{% block title %}
+    Preços | {{ block.super}}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Preços</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item active">Preços</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3>
+                        <i class="fa fa-check-square-o"></i> Calcular preços</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/core/precos/" method="post">
+
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="{{ form.preco.id_for_label }}">{{ form.preco.label }}</label>
+                            {% render_field form.preco class="form-control" %}
+                        </div>
+
+
+                        <button id="id_btn_calcular" type="submit" class="btn btn-primary">Calcular</button>
+
+                    </form>
+
+                </div>
+            </div>
+            <!-- end card-->
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3>
+                        <i class="fa fa-check-square-o"></i> Preços calculados</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            60%
+                            <h5 id="sale_price_60">
+                                <span class="badge badge-primary badge-pill">
+                                    <b>{{ sale_price_60.0 | floatformat:2 }}</b>
+                                </span>
+                                <span class="badge badge-success badge-pill">
+                                    <b>{{ sale_price_60.1 | floatformat:2 }}</b>
+                                </span>
+                            </h5>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            70%
+                            <h5 id="sale_price_70">
+                                <span class="badge badge-primary badge-pill">
+                                    <b>{{ sale_price_70.0 | floatformat:2 }}</b>
+                                </span>
+                                <span class="badge badge-success badge-pill">
+                                    <b>{{ sale_price_70.1 | floatformat:2 }}</b>
+                                </span>
+                            </h5>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            80%
+                            <h5 id="sale_price_80">
+                                <span class="badge badge-primary badge-pill">
+                                    <b>{{ sale_price_80.0 | floatformat:2 }}</b>
+                                </span>
+                                <span class="badge badge-success badge-pill">
+                                    <b>{{ sale_price_80.1 | floatformat:2 }}</b>
+                                </span>
+                            </h5>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            100%
+                            <h5 id="sale_price_100">
+                                <span class="badge badge-primary badge-pill">
+                                    <b>{{ sale_price_100.0 | floatformat:2 }}</b>
+                                </span>
+                                <span class="badge badge-success badge-pill">
+                                    <b>{{ sale_price_100.1 | floatformat:2 }}</b>
+                                </span>
+                            </h5>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- end card-->
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+<!-- END container-fluid -->
+    
+{% endblock content %}

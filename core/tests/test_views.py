@@ -31,11 +31,11 @@ class NewListTest(TestCase):
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('mmstore_admin'))
-        self.assertTemplateUsed(response, 'apps/core/index.html')
+        self.assertTemplateUsed(response, 'core/index.html')
 
     def test_view_not_uses_incorrect_template(self):
         response = self.client.get(reverse('mmstore_admin'))
-        self.assertTemplateNotUsed(response, 'apps/core/fake.html')
+        self.assertTemplateNotUsed(response, 'core/fake.html')
 
     def test_can_save_a_POST_request(self):
         self.client.post('/core/lists/new',
@@ -101,7 +101,7 @@ class MMStoreAdminTest(TestCase):
         item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
                                    data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/add_parcela')
-        self.assertTemplateUsed(response, 'apps/core/parcela/new.html')
+        self.assertTemplateUsed(response, 'core/parcela/new.html')
 
     def test_can_save_a_POST_request(self):
         list_ = List.objects.create()
@@ -125,7 +125,7 @@ class MMStoreAdminTest(TestCase):
         item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
                                    data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}')
-        self.assertTemplateUsed(response, 'apps/core/item_detail.html')
+        self.assertTemplateUsed(response, 'core/item_detail.html')
 
     # def test_status_code(self):
     #     list_ = List.objects.create()
@@ -155,7 +155,7 @@ class MMStoreAdminTest(TestCase):
         item = Item.objects.create(descricao='The first list item', cliente='Nalveira', valor_compra=Decimal(50),
                                    data_venda=date.today(), status='0', list=list_)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/item_edit')
-        self.assertTemplateUsed(response, 'apps/core/item_edit.html')
+        self.assertTemplateUsed(response, 'core/item_edit.html')
 
     def test_can_save_a_POST_request(self):
         list_ = List.objects.create()
@@ -180,7 +180,7 @@ class MMStoreAdminTest(TestCase):
 
     def test_uses_correct_template(self):
         response = self.client.get(f'/core/precos/')
-        self.assertTemplateUsed(response, 'apps/core/precos.html')
+        self.assertTemplateUsed(response, 'core/precos.html')
 
     def test_uses_parcela_form(self):
         response = self.client.get(f'/core/precos/')
@@ -211,7 +211,7 @@ class ParcelaEditTest(TestCase):
 
         parcela = Parcela.objects.create(data_recebimento=date.today(), valor=Decimal(25), status='0', item=item)
         response = self.client.get(f'/core/lists/{list_.id}/items/{item.id}/parcelas/{parcela.id}/parcela_edit')
-        self.assertTemplateUsed(response, 'apps/core/parcela/parcela_edit.html')
+        self.assertTemplateUsed(response, 'core/parcela/parcela_edit.html')
 
     def test_can_save_a_POST_request(self):
         list_ = List.objects.create()

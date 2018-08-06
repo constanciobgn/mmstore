@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {% if messages %}
+        <div class="row">
+            <div class="col-xl-12">
+                {% for message in messages %} {% if message.level_tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                {% else %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %} {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title float-left">Vendas</h1>
+                    <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item active">Vendas</li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fa fa-table"></i> Lista de Vendas com Parcelas Atradas</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-responsive-xl" id="id_lista_vendas_com_parcelas_atrasadas">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Valor Compra</th>
+                                    <th scope="col">Valor Venda</th>
+                                    <th scope="col">Data Venda</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items_atrasados %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td> {{ item.descricao }} </td>
+                                    <td> {{ item.cliente }} </td>
+                                    <td> {{ item.valor_compra }} </td>
+                                    <td> {{ item.valor_venda }} </td>
+                                    <td> {{ item.data_venda }} </td>
+                                    <td> {{ item.get_status_display }} </td>
+                                    <td>
+                                        <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
+                                        <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
+                                        <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a> |
+                                        <a href="{% url 'item_edit' 0 item.pk %}">Editar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- end card-->
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fa fa-check-square-o"></i> Cadastrar Venda</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="/core/lists/new" method="post">
+
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="{{ form.descricao.id_for_label }}">{{ form.descricao.label }}</label>
+                                {% render_field form.descricao class="form-control" %}
+
+                                <label for="{{ form.cliente.id_for_label }}">{{ form.cliente.label }}</label>
+                                {% render_field form.cliente class="form-control" %}
+
+                                <label for="{{ form.valor_compra.id_for_label }}">{{ form.valor_compra.label }}</label>
+                                {% render_field form.valor_compra class="form-control" %}
+
+                                <label for="{{ form.data_venda.id_for_label }}">{{ form.data_venda.label }}</label>
+                                {% render_field form.data_venda class="form-control" %}
+
+                                <script>
+                                    $(function () {
+                                        $('input[name="data_venda"]').daterangepicker({
+                                            singleDatePicker: true,
+                                            showDropdowns: true,
+                                            locale: {
+                                                format: 'DD/MM/YYYY'
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                                {% render_field form.status class="form-control" %}
+                            </div>
+
+
+                            <button id="id_btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
+
+                        </form>
+
+                    </div>
+                </div>
+                <!-- end card-->
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fa fa-table"></i> Lista de Vendas</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-responsive-xl" id="id_item_list_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Valor Compra</th>
+                                    <th scope="col">Valor Venda</th>
+                                    <th scope="col">Data Venda</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td> {{ item.descricao }} </td>
+                                    <td> {{ item.cliente }} </td>
+                                    <td> {{ item.valor_compra }} </td>
+                                    <td> {{ item.valor_venda }} </td>
+                                    <td> {{ item.data_venda }} </td>
+
+                                    {% if item.get_status_display == 'Finalizado' %}
+                                    <td>
+                                        <span class="badge badge-success badge-pill"> {{ item.get_status_display }} </span>
+                                    </td>
+                                    {% else %}
+                                    <td> {{ item.get_status_display }} </td>
+                                    {% endif %}
+
+
+                                    <td>
+                                        <a href="{% url 'add_parcela' 0 item.pk %}">Parcelar</a> |
+                                        <a href="{% url 'item_detail' 0 item.pk %}">Detalhar</a> |
+                                        <a href="{% url 'item_delete' 0 item.pk %}">Excluir</a> |
+                                        <a href="{% url 'item_edit' 0 item.pk %}">Editar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- end card-->
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    <!-- END container-fluid -->
+{% endblock content %}
+    

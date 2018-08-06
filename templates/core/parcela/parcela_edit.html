@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+
+{% block title %}
+    Editar Parcela | {{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title float-left">Vendas</h1>
+                    <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item">Home</li>
+                        <li class="breadcrumb-item active">Vendas</li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3><i class="fa fa-check-square-o"></i> Editar Parcela</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="/core/lists/{{ 0 }}/items/{{ item.id }}/parcelas/{{ parcela.id }}/parcela_edit" method="post">
+
+                            {% csrf_token %}
+
+                            {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {% render_field field class="form-control" %}
+                                </div>
+                            {% endfor %}
+
+                            <button id="id_btn_salvar" type="submit" class="btn btn-primary">Salvar</button>
+
+                        </form>
+
+                    </div>
+                </div><!-- end card-->
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3><i class="fa fa-table"></i> Parcelas</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-responsive-xl" id="id_parcela_list_table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Data de Vencimento</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for parcela in item.parcela_set.all %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td> {{ parcela.data_recebimento }} </td>
+                                    <td> {{ parcela.valor }} </td>
+                                    <td> {{ parcela.get_status_display }} </td>
+                                    <td>
+                                        <a href="{% url 'parcela_delete' 0 item.pk parcela.pk %}">Excluir</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div><!-- end card-->
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<!-- END container-fluid -->
+
+    
+{% endblock content %}
+    
+    
+
