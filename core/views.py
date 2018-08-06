@@ -1,11 +1,28 @@
 from datetime import date
 
+from decimal import Decimal
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from core.forms import ItemForm, ParcelaForm, PrecoForm
 from core.models import List, Item, Parcela
+
+from django.db.models import Sum, Value as V
+from django.db.models.functions import Coalesce
+
+
+def dashboard(request):
+    # aggregated = Item.objects.aggregate(venda_total=Coalesce(Sum('valor_venda'), V(0)),
+    #                                             compra_total=Coalesce(Sum('valor_compra'), V(0)))
+    # lucro_acumulado = aggregated['venda_total'] - aggregated['compra_total']
+
+    aggregated = Item.objects.aggregate(compra_total=Coalesce(Sum('valor_compra'), V(0)))
+    
+    valor_total_compras = aggregated['compra_total']
+
+    return render(request, 'core/dashboard.html', {'valor_total_compras': valor_total_compras,})
 
 
 def hello_world(request):

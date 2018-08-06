@@ -18,7 +18,7 @@ from django.urls import path
 
 from accounts.views import send_login_email, login, logout_view
 from core.views import hello_world, mmstore_admin, new_list, add_parcela, item_detail, item_delete, item_edit, \
-    precos, parcela_delete, parcela_edit
+    precos, parcela_delete, parcela_edit, dashboard
 
 from landing.views import landing_page
 
@@ -28,6 +28,8 @@ urlpatterns = [
     path('', landing_page, name='landing_page'),
     
     path('hello/', hello_world, name='hello_world'),
+
+    path('dashboard/', dashboard, name='dashboard'),
 
     path('core/', mmstore_admin, name='mmstore_admin'),
     path('core/precos/', precos, name='precos'),

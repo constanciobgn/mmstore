@@ -7,6 +7,24 @@ from django.urls import reverse
 from core.forms import PrecoForm
 from core.models import Item, List, Parcela
 
+class DashboardTest(TestCase):
+
+    def test_status_code(self):
+        response = self.client.get('/dashboard/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_by_name(self):
+        response = self.client.get(reverse('dashboard'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('dashboard'))
+        self.assertTemplateUsed(response, 'core/dashboard.html')
+
+    def test_view_not_uses_incorrect_template(self):
+        response = self.client.get(reverse('dashboard'))
+        self.assertTemplateNotUsed(response, 'core/fake.html')
+
 
 class HelloWorldTest(TestCase):
 
